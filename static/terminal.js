@@ -1,6 +1,8 @@
 (() => {
     const input = document.querySelector('#command-input');
     const form = document.querySelector('#command-form');
+    const sshCommand = input.placeholder;
+    const shellIdentity = form.dataset.identity || 'visitor';
     const history = [];
     let historyIndex = 0;
     let draft = '';
@@ -96,7 +98,7 @@
         document.querySelector('#quick-commands').hidden = !entered;
         document.querySelector('#connection-hint').hidden = entered;
         document.querySelector('#entry-instruction').hidden = entered;
-        input.placeholder = entered ? '' : 'ssh hugo';
+        input.placeholder = entered ? '' : sshCommand;
     }
 
     function stopProgram() {
@@ -116,7 +118,7 @@
         result.className = 'command-result';
         const echo = document.createElement('div');
         echo.className = 'command-echo';
-        echo.textContent = `visitor@hugo:${document.querySelector('#prompt-path').textContent} $ ${input.value}^C`;
+        echo.textContent = `${shellIdentity}:${document.querySelector('#prompt-path').textContent} $ ${input.value}^C`;
         result.append(echo);
         document.querySelector('#history').append(result);
         input.value = '';
@@ -128,24 +130,20 @@
 
     document.querySelector('#year').textContent = new Date().getFullYear();
     icons();
-    requestAnimationFrame(() => form.scrollIntoView({ block: 'nearest' }));
-    try {
-        document.body.classList.toggle(
-            'crt-off',
-            localStorage.getItem('hugo-crt') === 'off',
-        );
-    } catch {}
+    focusInput();
+    document.body.classList.remove('crt-off');
     const crt = document.querySelector('#crt-toggle');
-    crt.setAttribute(
-        'aria-pressed',
-        String(!document.body.classList.contains('crt-off')),
-    );
+    function updateCrtToggle() {
+        const enabled = !document.body.classList.contains('crt-off');
+        const label = enabled ? 'Disable CRT effect' : 'Enable CRT effect';
+        crt.setAttribute('aria-pressed', String(enabled));
+        crt.setAttribute('aria-label', label);
+        crt.title = label;
+    }
+    updateCrtToggle();
     crt.addEventListener('click', () => {
-        const off = document.body.classList.toggle('crt-off');
-        crt.setAttribute('aria-pressed', String(!off));
-        try {
-            localStorage.setItem('hugo-crt', off ? 'off' : 'on');
-        } catch {}
+        document.body.classList.toggle('crt-off');
+        updateCrtToggle();
     });
 
     document.addEventListener('click', (event) => {

@@ -17,7 +17,7 @@ With a stable Rust toolchain installed, run from the repository root:
 cargo run
 ```
 
-Open <http://127.0.0.1:3000> and type `ssh hugo` to enter.
+Open <http://127.0.0.1:3000> and type `ssh visitor@adventurers-log` to enter.
 The **Run portfolio** VS Code task runs the same command.
 
 There's no frontend build step, database, or Node requirement to run the site.

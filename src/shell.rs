@@ -3,6 +3,17 @@ use crate::{
     filesystem::{self, Kind, Node},
 };
 
+pub const HOSTNAME: &str = "adventurers-log";
+pub const USERNAME: &str = "visitor";
+
+pub fn ssh_target() -> String {
+    format!("{USERNAME}@{HOSTNAME}")
+}
+
+pub fn ssh_command() -> String {
+    format!("ssh {}", ssh_target())
+}
+
 pub enum Output {
     Text(String),
     FileView { path: String, text: String },
@@ -48,12 +59,15 @@ pub fn execute(content: &Portfolio, cwd: &str, command: &str, entered: bool) -> 
         return response;
     }
     if !entered {
-        return if words == ["ssh", "hugo"] {
+        return if words == ["ssh", ssh_target().as_str()] {
             response.cwd = "/".into();
             response.output = Output::Enter;
             response
         } else {
-            fail(response, "Connection closed. Enter ssh hugo to connect.")
+            fail(
+                response,
+                &format!("Connection closed. Enter {} to connect.", ssh_command()),
+            )
         };
     }
     let arguments = &words[1..];
@@ -117,8 +131,8 @@ pub fn complete(content: &Portfolio, cwd: &str, command: &str, entered: bool) ->
         return vec![];
     }
     if !entered {
-        return if "ssh hugo".starts_with(&command.to_ascii_lowercase()) {
-            vec!["ssh hugo".into()]
+        return if ssh_command().starts_with(&command.to_ascii_lowercase()) {
+            vec![ssh_command()]
         } else {
             vec![]
         };
@@ -284,8 +298,12 @@ mod tests {
         }
         assert!(complete(&portfolio, "/", "cd REA", true).is_empty());
         assert!(complete(&portfolio, "/", "cat h", true).is_empty());
-        assert_eq!(complete(&portfolio, "/", "ss", false), ["ssh hugo"]);
-        assert_eq!(complete(&portfolio, "/", "SS", false), ["ssh hugo"]);
+        assert_eq!(complete(&portfolio, "/", "ss", false), [ssh_command()]);
+        assert_eq!(complete(&portfolio, "/", "SS", false), [ssh_command()]);
+        assert_eq!(
+            complete(&portfolio, "/", "SSH VISITOR@AD", false),
+            [ssh_command()]
+        );
         assert_eq!(complete(&portfolio, "/", "WHO", true), ["whoami"]);
         assert!(complete(&portfolio, "/", "cat", false).is_empty());
         assert!(complete(&portfolio, "/", "ls ", true).len() > 1);
@@ -297,7 +315,10 @@ mod tests {
         assert!(matches!(response.output, Output::Exit));
         assert_eq!(response.cwd, "/");
         assert!(execute(&content(), "/", "ls", false).error);
-        assert_eq!(execute(&content(), "/about", "ssh hugo", false).cwd, "/");
+        assert_eq!(
+            execute(&content(), "/about", &ssh_command(), false).cwd,
+            "/"
+        );
     }
 
     #[test]
@@ -339,9 +360,11 @@ mod tests {
     fn connection_and_untrusted_input() {
         assert!(execute(&content(), "/", "ls", false).error);
         assert!(matches!(
-            execute(&content(), "/", "ssh hugo", false).output,
+            execute(&content(), "/", &ssh_command(), false).output,
             Output::Enter
         ));
+        assert!(execute(&content(), "/", "ssh visitor@wrong-host", false).error);
+        assert!(execute(&content(), "/", "ssh admin@adventurers-log", false).error);
         assert!(execute(&content(), "/", "cat 'oops", true).error);
         assert!(execute(&content(), "/", "ls; whoami", true).error);
         assert!(execute(&content(), "/", "ls -z", true).error);

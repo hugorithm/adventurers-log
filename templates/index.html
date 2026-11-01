@@ -18,7 +18,7 @@
 <body>
 <div class="terminal-app">
     <header class="topbar">
-        <a class="wordmark" href="/" aria-label="Hugo Silva home"><span class="monogram">hs<span>_</span></span><span class="site-address">hugo.silva<span> / personal terminal</span></span></a>
+        <a class="wordmark" href="/" aria-label="Hugo Silva home"><span class="monogram">hs<span>_</span></span><span class="site-address">{{ hostname }}<span> / personal terminal</span></span></a>
         <div class="topbar-right"><span class="connection-state"><span class="status-dot"></span><span id="connection-label">awaiting connection</span></span><button id="crt-toggle" class="icon-button" type="button" title="Toggle CRT effect" aria-label="Toggle CRT effect" aria-pressed="true"><i data-lucide="monitor" aria-hidden="true"></i></button><a class="icon-button" href="{{ portfolio.github }}" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="Hugo on GitHub"><i data-lucide="github" aria-hidden="true"></i></a></div>
     </header>
     <main id="terminal-scroll" tabindex="-1">
@@ -29,16 +29,16 @@
                 <div class="identity"><div class="identity-eyebrow">HELLO, WORLD. I'M</div><h1>{{ portfolio.name }}<span class="name-cursor">_</span></h1><p class="role">{{ portfolio.role }} <span>@</span> <span class="company">{{ portfolio.company }}</span></p></div>
                 <p class="intro">A software engineer with a soft spot for piano keys,<br class="desktop-break"> mountain trails, and things that quietly work.</p>
                 <div class="welcome-signature"><span class="signature-line"></span><span>sometimes the best way forward is a command line.</span></div>
-                <div id="entry-instruction" class="entry-instruction"><span class="entry-arrow" aria-hidden="true">&gt;</span><p>Make yourself at home.<br><span>Type <button type="button" data-command="ssh hugo" class="inline-command">ssh hugo</button> and press Enter to connect.</span></p></div>
+                <div id="entry-instruction" class="entry-instruction"><span class="entry-arrow" aria-hidden="true">&gt;</span><p>Make yourself at home.<br><span>Type <button type="button" data-command="{{ ssh_command }}" class="inline-command">{{ ssh_command }}</button> and press Enter to connect.</span></p></div>
             </section>
             <div id="history" role="log" aria-live="polite" aria-relevant="additions"></div>
             <div class="terminal-prompt">
             <div id="request-error" class="request-error" role="alert" hidden>Connection interrupted. Your command is still here; try again.</div>
-            <form id="command-form" hx-post="/command" hx-target="#history" hx-swap="beforeend" hx-disabled-elt="#command-input, #submit-command" autocomplete="off">
+            <form id="command-form" data-identity="{{ identity }}" hx-post="/command" hx-target="#history" hx-swap="beforeend" hx-disabled-elt="#command-input, #submit-command" autocomplete="off">
                 <input id="cwd" name="cwd" type="hidden" value="/">
                 <input id="entered" name="entered" type="hidden" value="false">
-                <label for="command-input" class="prompt"><span class="prompt-user">visitor</span><span class="prompt-at">@</span><span>hugo</span><span class="prompt-colon">:</span><span id="prompt-path">~</span><span class="prompt-symbol">$</span></label>
-                <input id="command-input" name="command" type="text" aria-label="Terminal command" placeholder="ssh hugo" maxlength="512" spellcheck="false" autocapitalize="off" autocorrect="off" autofocus>
+                <label for="command-input" class="prompt"><span class="prompt-user">{{ username }}</span><span class="prompt-at">@</span><span>{{ hostname }}</span><span class="prompt-colon">:</span><span id="prompt-path">~</span><span class="prompt-symbol">$</span></label>
+                <input id="command-input" name="command" type="text" aria-label="Terminal command" placeholder="{{ ssh_command }}" maxlength="512" spellcheck="false" autocapitalize="off" autocorrect="off" autofocus>
                 <span id="loading" class="htmx-indicator" aria-hidden="true">...</span>
                 <button id="submit-command" class="icon-button" type="submit" title="Run command" aria-label="Run command"><i data-lucide="corner-down-left" aria-hidden="true"></i></button>
             </form>

@@ -1,8 +1,8 @@
 <section class="command-result{% if error %} is-error{% endif %}" data-cwd="{{ cwd }}" data-path="{{ path }}" data-entered="{{ entered }}" data-connected="{{ connected }}" data-kind="{{ kind }}">
-    {% if kind != "clear" %}<div class="command-echo"><span class="echo-user">visitor@hugo</span><span class="echo-path">:{{ old_path }}</span><span class="echo-dollar">$</span><span>{{ command }}</span></div>{% endif %}
+    {% if kind != "clear" %}<div class="command-echo"><span class="echo-user">{{ identity }}</span><span class="echo-path">:{{ old_path }}</span><span class="echo-dollar">$</span><span>{{ command }}</span></div>{% endif %}
     {% if kind == "enter" || kind == "listing" %}
     {% if kind == "enter" %}
-    <div class="connected-message"><p><span class="ok">Connected.</span> Welcome to /home/hugo.</p><p>Take a look around. Every directory has a story.</p></div>
+    <div class="connected-message"><p><span class="ok">Connected.</span> {{ identity }}</p><p>Welcome to the Adventurer's Log. Every directory has a story.</p></div>
     {% endif %}
     <div class="directory-list">{% for entry in entries %}{% if entry.kind == "executable" %}<button type="button" data-command="./hiddenbin">{% else %}<button type="button" data-command="{{ entry.command }}">{% endif %}<span class="entry-name {{ entry.kind }}"><i data-lucide="{% if entry.kind == "directory" %}folder{% else if entry.kind == "executable" %}square-terminal{% else %}file-text{% endif %}"></i>{{ entry.name }}</span><span>{{ entry.description }}</span><i data-lucide="arrow-up-right"></i></button>{% endfor %}</div>
     {% if kind == "enter" %}<p class="terminal-aside">Curious? There's always more than meets the eye.</p>{% endif %}

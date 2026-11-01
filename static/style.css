@@ -58,23 +58,37 @@ body {
     font: 13px/1.7 var(--mono);
     letter-spacing: 0;
 }
+body::before,
 body::after {
     content: '';
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 20;
+}
+body::before {
+    box-shadow: inset 0 0 120px 25px #00000059;
+}
+body::after {
     background: repeating-linear-gradient(
         0deg,
         transparent,
-        transparent 3px,
-        #00000012 3px,
+        transparent 2px,
+        #00000066 2px,
         #00000012 4px
     );
-    opacity: 0.65;
+    opacity: 0.75;
 }
+body:not(.crt-off) .terminal-app {
+    text-shadow: 0 0 4px #c4edd14d;
+}
+body.crt-off::before,
 body.crt-off::after {
     display: none;
+}
+#crt-toggle[aria-pressed='true'] {
+    color: var(--accent);
+    background: #a5e4d112;
 }
 button,
 input,
@@ -928,12 +942,15 @@ h2 {
     }
     .prompt {
         font-size: 10px;
+        flex-basis: 100%;
     }
     #prompt-path {
         max-width: 100px;
     }
     #command-form {
         gap: 8px;
+        flex-wrap: wrap;
+        row-gap: 0;
     }
     #command-input {
         font-size: 16px;

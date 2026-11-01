@@ -23,6 +23,10 @@ struct AppState {
 #[template(path = "index.html")]
 struct Index {
     portfolio: Portfolio,
+    hostname: &'static str,
+    username: &'static str,
+    identity: String,
+    ssh_command: String,
 }
 
 struct Entry {
@@ -36,6 +40,7 @@ struct Entry {
 #[template(path = "response.html")]
 struct Fragment {
     command: String,
+    identity: String,
     old_path: String,
     cwd: String,
     path: String,
@@ -96,6 +101,10 @@ fn render(template: &impl Template) -> Result<Html<String>, WebError> {
 async fn index(State(state): State<AppState>) -> Result<Html<String>, WebError> {
     render(&Index {
         portfolio: load(&state)?,
+        hostname: shell::HOSTNAME,
+        username: shell::USERNAME,
+        identity: shell::ssh_target(),
+        ssh_command: shell::ssh_command(),
     })
 }
 
@@ -109,6 +118,7 @@ async fn command(
         old_path: filesystem::display_path(&filesystem::resolve("/", &input.cwd)),
         path: filesystem::display_path(&response.cwd),
         command: input.command,
+        identity: shell::ssh_target(),
         cwd: response.cwd,
         entered: input.entered,
         connected: false,
@@ -138,8 +148,11 @@ async fn command(
         Output::Exit => {
             fragment.kind = "exit";
             fragment.entered = false;
-            fragment.text =
-                "logout\nConnection to hugo closed.\nEnter ssh hugo to reconnect.".into();
+            fragment.text = format!(
+                "logout\nConnection to {} closed.\nEnter {} to reconnect.",
+                shell::HOSTNAME,
+                shell::ssh_command()
+            );
         }
         Output::Enter => {
             fragment.kind = "enter";
@@ -239,6 +252,7 @@ mod tests {
         )
         .unwrap();
         assert!(page.contains("Hugo Silva"));
+        assert!(page.contains(&shell::ssh_command()));
         assert!(page.contains("hx-post=\"/command\""));
         assert!(page.find("id=\"command-form\"").unwrap() < page.find("</main>").unwrap());
         let response = app
