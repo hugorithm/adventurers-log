@@ -10,4 +10,4 @@
 - Preserve keyboard access, touch controls, reduced-motion support, and the CRT toggle.
 - Check short desktop windows and narrow phones; the connection instruction must remain visible.
 - Run `cargo fmt --check`, `cargo test --locked`, and `cargo clippy --locked --all-targets -- -D warnings`.
-- Syntax-check both browser scripts with `node --check` after editing them.
+- Syntax-check edited browser scripts with `node --check`; run `node --test tests/maze.test.cjs` for game changes.

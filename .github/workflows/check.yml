@@ -19,4 +19,7 @@ jobs:
       - run: cargo test --locked
       - run: cargo clippy --locked --all-targets -- -D warnings
       - run: node --check static/terminal.js
-      - run: node --check static/game.js
+      - run: node --check static/vim-viewer.js
+      - run: node --check static/maze.js
+      - run: node --check static/maze-view.js
+      - run: node --test tests/maze.test.cjs

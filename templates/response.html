@@ -10,20 +10,24 @@
     <div class="profile-output"><span class="output-label">ABOUT / HUGO SILVA</span><h2>{{ portfolio.name }}</h2><p class="profile-role">{{ portfolio.role }} @ {{ portfolio.company }}</p><p>{{ portfolio.bio }}</p><p class="terminal-aside">{{ portfolio.location }}</p><div class="skill-list">{% for skill in portfolio.skills %}<span>{{ skill }}</span>{% endfor %}</div><a href="{{ portfolio.github }}" target="_blank" rel="noopener noreferrer" class="text-link">github.com/hugorithm <i data-lucide="arrow-up-right"></i></a></div>
     {% else if kind == "projects" %}
     <div class="projects-output"><span class="output-label">SELECTED WORK</span>{% for project in portfolio.projects %}<article class="project"><div><span class="project-status">{{ project.status }}</span><h2>{{ project.name }}</h2><p>{{ project.description }}</p><span class="project-stack">{{ project.stack }}</span></div><button type="button" class="icon-button" data-command="cat /projects/{{ project.slug }}/README.txt" aria-label="Read {{ project.name }}" title="Read project"><i data-lucide="arrow-up-right"></i></button></article>{% endfor %}</div>
+    {% else if kind == "vim" %}
+    <section class="vim-viewer" data-vim-viewer data-file="{{ file_path }}" role="dialog" aria-modal="true" aria-label="Read-only Vim file viewer">
+        <header class="vim-header"><span class="vim-filename">{{ file_path }}</span><span class="vim-readonly">READ ONLY</span><button type="button" data-vim-close class="icon-button" title="Close file" aria-label="Close file"><i data-lucide="x"></i></button></header>
+        <div class="vim-editor"><textarea data-vim-source aria-label="File contents" readonly hidden>{{ text }}</textarea></div>
+        <footer class="vim-status"><span data-vim-mode>NORMAL</span><span data-vim-message>{{ file_path }}</span><span data-vim-position>1:1</span></footer>
+    </section>
     {% else if kind == "game" %}
     <div class="encore" data-game>
-        <div class="game-heading"><div><span class="output-label">HIDDEN TRACK / 01</span><h2>One more song.</h2><p>Turns out, this keyboard has another job.</p></div><button type="button" class="icon-button" data-game-close title="Close game" aria-label="Close game"><i data-lucide="x"></i></button></div>
-        <div class="game-score"><span>SCORE <strong data-score>0000</strong></span><span>BEST <strong data-best>0000</strong></span><span data-game-status>ready when you are</span></div>
-        <canvas width="720" height="300" aria-label="Hugo's constellation of interests and four-lane piano rhythm game"></canvas>
-        <div class="constellation-controls" data-sky-controls role="group" aria-label="Explore the constellation">
-            <button type="button" data-star="0" aria-pressed="true"><i data-lucide="code-2"></i>Code</button>
-            <button type="button" data-star="1" aria-pressed="false"><i data-lucide="music-2"></i>Piano</button>
-            <button type="button" data-star="2" aria-pressed="false"><i data-lucide="mountain"></i>Trails</button>
-            <button type="button" data-star="3" aria-pressed="false"><i data-lucide="compass"></i>Curiosity</button>
+        <div class="game-heading"><div><span class="output-label">HIDDEN ARCADE / 01</span><h2>maze.bin</h2></div><button type="button" class="icon-button" data-game-close title="Close game" aria-label="Close game"><i data-lucide="x"></i></button></div>
+        <div class="game-score"><span>SCORE <strong data-score>000000</strong></span><span>BEST <strong data-best>000000</strong></span><span>LEVEL <strong data-level>01</strong></span><span>LIVES <strong data-lives>3</strong></span></div>
+        <div class="maze-stage" data-maze-stage></div>
+        <div class="maze-controls" role="group" aria-label="Movement controls">
+            <button type="button" data-direction="left" aria-label="Move left" title="Move left"><i data-lucide="arrow-left"></i><kbd>H</kbd></button>
+            <button type="button" data-direction="down" aria-label="Move down" title="Move down"><i data-lucide="arrow-down"></i><kbd>J</kbd></button>
+            <button type="button" data-direction="up" aria-label="Move up" title="Move up"><i data-lucide="arrow-up"></i><kbd>K</kbd></button>
+            <button type="button" data-direction="right" aria-label="Move right" title="Move right"><i data-lucide="arrow-right"></i><kbd>L</kbd></button>
         </div>
-        <p class="constellation-note" data-constellation>Code: making complex things feel simple.</p>
-        <div class="piano-keys"><button type="button" data-lane="0" aria-label="Play C note"><span>C</span><kbd>D</kbd></button><button type="button" data-lane="1" aria-label="Play E note"><span>E</span><kbd>F</kbd></button><button type="button" data-lane="2" aria-label="Play G note"><span>G</span><kbd>J</kbd></button><button type="button" data-lane="3" aria-label="Play A note"><span>A</span><kbd>K</kbd></button></div>
-        <div class="game-actions"><button type="button" data-game-start class="game-start"><i data-lucide="play"></i><span>Play</span></button><button type="button" data-game-sound class="icon-button" aria-label="Enable sound" title="Enable sound" aria-pressed="false"><i data-lucide="volume-x"></i></button><span data-game-message>an encore for the curious.</span></div>
+        <div class="game-actions"><button type="button" data-game-start class="game-start"><i data-lucide="play"></i><span>Play</span></button><button type="button" data-game-pause class="icon-button" aria-label="Pause game" title="Pause or resume" hidden><i data-lucide="pause"></i></button><button type="button" data-game-sound class="icon-button" aria-label="Enable sound" title="Enable sound" aria-pressed="false"><i data-lucide="volume-x"></i></button><span data-game-status>READY</span></div>
     </div>
     {% else if kind == "clear" %}
     <p class="terminal-aside">A fresh start.</p>

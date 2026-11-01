@@ -464,6 +464,30 @@ h1 {
     color: var(--muted);
     margin-left: 12px;
 }
+.command-field {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+.command-field #command-input {
+    caret-color: transparent;
+    padding-right: 1ch;
+}
+.command-cursor {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1.3em;
+    display: grid;
+    place-items: center;
+    background: var(--accent);
+    color: var(--bg);
+    white-space: pre;
+    pointer-events: none;
+    line-height: 1.3;
+    animation: cursor 1.2s step-end infinite;
+}
 #command-input {
     border: none;
     outline: none;
@@ -643,74 +667,45 @@ h2 {
     color: var(--muted);
     text-align: right;
 }
-.encore canvas {
+.maze-stage {
     width: 100%;
-    aspect-ratio: 12 / 5;
+    max-width: 420px;
+    aspect-ratio: 21 / 23;
+    background: #000000;
+}
+.maze-stage canvas {
+    width: 100% !important;
+    height: 100% !important;
     display: block;
-    background: #0d1110;
+    image-rendering: pixelated;
+}
+.maze-controls {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    max-width: 420px;
+    margin-top: 12px;
+}
+.maze-controls button {
+    height: 46px;
+    color: var(--muted);
     border: 1px solid var(--line);
-}
-.constellation-controls {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-bottom: 1px solid var(--line);
-}
-.constellation-controls button {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 7px;
-    padding: 10px 0;
-    font-size: 10px;
-    color: var(--muted);
-    border-bottom: 1px solid transparent;
+    gap: 10px;
+    align-items: center;
+    border-radius: 3px;
 }
-.constellation-controls button[aria-pressed='true'] {
+.maze-controls button:hover,
+.maze-controls button:active {
     color: var(--accent);
-    border-bottom-color: var(--accent);
+    border-color: var(--accent);
 }
-.constellation-controls svg {
-    width: 13px;
-}
-.constellation-note {
-    color: var(--muted);
-    font-size: 10px;
-    min-height: 44px;
-    padding: 12px 0;
-}
-.piano-keys {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3px;
-    margin-top: 3px;
-}
-.piano-keys button {
-    height: 58px;
-    background: #dbe2d9;
-    color: #25362d;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 3px;
-    align-items: center;
-    border-radius: 0 0 3px 3px;
-}
-.piano-keys button:nth-child(2),
-.piano-keys button:nth-child(4) {
-    background: #cbd7ce;
-}
-.piano-keys button.active,
-.piano-keys button:active {
-    background: var(--accent);
-}
-.piano-keys span {
-    font-size: 12px;
-}
-.piano-keys kbd {
+.maze-controls kbd {
     font: 9px var(--mono);
-    opacity: 0.6;
 }
 .game-actions {
+    max-width: 420px;
     margin-top: 16px;
     display: flex;
     align-items: center;
@@ -734,6 +729,101 @@ h2 {
     font-size: 10px;
     margin-left: auto;
     text-align: right;
+}
+.vim-viewer {
+    position: fixed;
+    inset: 76px 0 38px;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    padding: 24px 46px;
+}
+.vim-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    font-size: 11px;
+}
+.vim-filename {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: var(--cyan);
+}
+.vim-readonly {
+    color: var(--faint);
+    font-size: 9px;
+    white-space: nowrap;
+}
+.vim-editor {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    padding-top: 18px;
+}
+.vim-editor .CodeMirror {
+    height: 100%;
+    background: transparent;
+    color: var(--text);
+    font: 13px/1.9 var(--mono);
+}
+.vim-editor .CodeMirror-gutters {
+    border: none;
+    background: var(--bg);
+}
+.vim-editor .CodeMirror-linenumber {
+    color: var(--faint);
+    padding-right: 18px;
+}
+.vim-editor .CodeMirror-selected {
+    background: #a5e4d12b !important;
+}
+.vim-editor .CodeMirror-cursor {
+    border-left-color: var(--accent);
+}
+.vim-editor .cm-fat-cursor .CodeMirror-cursor {
+    background: var(--accent);
+}
+.vim-editor .CodeMirror-dialog {
+    background: var(--surface);
+    color: var(--text);
+}
+.vim-editor .CodeMirror-dialog input {
+    font: inherit;
+    color: var(--text);
+}
+.vim-status {
+    display: grid;
+    grid-template-columns: 85px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    min-height: 40px;
+    font-size: 10px;
+    border-top: 1px solid var(--line);
+}
+.vim-status > span:first-child {
+    color: var(--accent);
+}
+.vim-status > span:nth-child(2) {
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@media (max-width: 700px) {
+    .vim-viewer {
+        inset: 62px 0 33px;
+        padding: 18px 20px;
+    }
+    .vim-header {
+        gap: 10px;
+    }
+    .vim-editor .CodeMirror {
+        font-size: 12px;
+    }
 }
 .noscript-message {
     position: fixed;

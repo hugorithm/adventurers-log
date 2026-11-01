@@ -44,6 +44,7 @@ struct Fragment {
     error: bool,
     kind: &'static str,
     text: String,
+    file_path: String,
     entries: Vec<Entry>,
     portfolio: Portfolio,
 }
@@ -114,12 +115,18 @@ async fn command(
         error: response.error,
         kind: "text",
         text: String::new(),
+        file_path: String::new(),
         entries: vec![],
         portfolio,
     };
     let clear = matches!(response.output, Output::Clear);
     match response.output {
         Output::Text(text) => fragment.text = text,
+        Output::FileView { path, text } => {
+            fragment.kind = "vim";
+            fragment.file_path = filesystem::display_path(&path);
+            fragment.text = text;
+        }
         Output::Listing(nodes) => {
             fragment.kind = "listing";
             fragment.entries = entries(nodes);

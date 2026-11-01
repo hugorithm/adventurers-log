@@ -1,91 +1,59 @@
-# Hugo's Terminal
+# Hugo Silva's Portfolio
 
-A personal portfolio for Hugo Silva: Rust on the server, htmx in the browser,
-and a small, fictional filesystem to explore. No frontend build pipeline,
-database, analytics, or real shell execution.
+My personal corner of the internet, built as a terminal.
 
-## Run
+I'm a Software Engineer at SWISS International Air Lines Ltd. Outside of code,
+I play piano and hike in nature. I wanted this site to feel like something I'd
+actually enjoy exploring: a few folders, a familiar prompt, and a surprise
+for anyone who looks a little closer.
 
-Install a stable Rust toolchain, then run from the repository root:
+This repository contains the website, not a portfolio template.
+
+## Run Locally
+
+With a stable Rust toolchain installed, run from the repository root:
 
 ```sh
 cargo run
 ```
 
-Open http://127.0.0.1:3000 and enter `ssh hugo`. The same command is available
-as the **Run portfolio** VS Code task.
+Open <http://127.0.0.1:3000> and type `ssh hugo` to enter.
+The **Run portfolio** VS Code task runs the same command.
 
-## Make It Yours
+There's no frontend build step, database, or Node requirement to run the site.
 
-Edit [content/portfolio.toml](content/portfolio.toml) to update your name, bio,
-role, company, skills, experience, GitHub link, and projects. Content is loaded
-on every request, so these changes do not require recompiling or restarting.
-Use unique project slugs containing letters, numbers, or hyphens; project links
-must use HTTPS. Keep `url = ""` when there is no public link.
+## Explore
 
-The `next-adventure` project and parts of the experience entry are clearly
-marked sample content. Replace them before publishing. The terminal portfolio
-entry describes this actual project.
+My bio, projects, experience, and contact details live in a virtual filesystem.
+Use `ls` and `cd` to move around, `cat` to read a file, or `vim` to open it in
+the read-only Vim viewer. `:q` returns to the shell, and `help` lists the commands.
 
-For multiline content, TOML supports triple-quoted strings:
+Tab completion, command history, Ctrl+C, and Ctrl+D keep the experience close
+to a terminal. The shell is simulated: nothing a visitor types executes on
+the server. There's a hidden arcade game, too. I'll leave finding it to you.
 
-```toml
-experience = """
-Software Engineer @ SWISS International Air Lines Ltd.
+## Under the Hood
 
-Add your dates, contributions, and highlights here.
-"""
-```
+The backend is Rust with Axum and Askama. htmx handles command responses,
+with small JavaScript modules for terminal interactions, the CodeMirror Vim
+viewer, and a Phaser maze game. The styling is deliberately minimal, with
+a block cursor and an optional CRT effect.
 
-Presentation and the hidden surprise have small, separate homes:
+I keep the content separate from the shell and presentation so updating the
+portfolio doesn't mean rewriting the site.
 
-| File | Responsibility |
-| --- | --- |
-| `src/content.rs` | Load and validate portfolio content |
-| `src/filesystem.rs` | Define virtual folders/files and normalize paths |
-| `src/shell.rs` | Parse commands and return typed results; no HTML or OS shell |
-| `src/web.rs` | Axum routes, completion, and escaped Askama rendering |
-| `templates/index.html` | Initial page and command form |
-| `templates/response.html` | htmx output fragments |
-| `static/style.css` | Design tokens, CRT effect, and responsive layout |
-| `static/terminal.js` | History, completion, focus, and htmx lifecycle |
-| `static/game.js` | Interactive constellation and piano rhythm game |
+## Maintaining the Site
 
-Templates are compiled into the Rust binary. Restart `cargo run` after Rust
-or template changes. CSS and JavaScript changes only need a browser refresh.
-There are no real folders exposed to visitors; `~` is the virtual home/root.
-Add virtual files in `filesystem.rs`, not in the operating system's filesystem.
+[content/portfolio.toml](content/portfolio.toml) holds my profile, skills,
+experience, links, and projects. It's read on each request, so content changes
+don't need a restart. Some project and experience entries are still placeholders
+while I finish writing them.
 
-## Commands
+Virtual folders and files are defined in [src/filesystem.rs](src/filesystem.rs).
+Command behavior lives in [src/shell.rs](src/shell.rs).
 
-`ls`, `la`, `ls -a`, `ls -l`, `cd`, `cat`, `pwd`, `whoami`, `about`, `projects`,
-`contact`, `help`, and `clear`. Paths support `~`, `.`, `..`, and `/`.
-Quoted arguments are parsed with the `shell-words` library. Pipes,
-redirects, and command chaining are intentionally unsupported.
-
-Arrow keys recall command history; Tab completes commands and visible paths.
-Completion is case-insensitive and preserves actual filenames. Repeated Tab
-cycles through ambiguous matches; Shift+Tab cycles backwards, and matches are
-also clickable. Hidden files complete when explicitly prefixed with `.` or
-when using `la` / `ls -a`.
-
-Ctrl+C cancels the current line or running request/game without disconnecting;
-selected text still copies normally. Ctrl+D on an empty prompt disconnects:
-enter `ssh hugo` to start a new session at home. On a nonempty line, Ctrl+D
-deletes the character at the cursor, like a shell. `exit` also disconnects.
-Ctrl+L clears the terminal. Folder/file rows and quick commands are clickable
-for visitors who prefer not to type.
-
-### Hidden Program
-
-At home, `la` or `ls -a` reveals `hiddenbin`. Run `./hiddenbin` to explore an
-interactive constellation of Hugo's interests. **Play** starts a short piano
-rhythm game: hit D/F/J/K, or tap the piano keys, as notes reach the dashed line.
-Sound is opt-in. Scores and the CRT preference stay in the visitor's local
-browser storage. Escape or the close button returns focus to the terminal.
-
-The game is intentionally a small original diversion, not a full game engine.
-Its melody, interests, colors, and note frequencies are defined in `game.js`.
+Rust and Askama template changes need a restart of `cargo run`.
+CSS and JavaScript changes only need a browser refresh.
 
 ## Checks
 
@@ -94,36 +62,30 @@ cargo fmt --check
 cargo test --locked
 cargo clippy --locked --all-targets -- -D warnings
 node --check static/terminal.js
-node --check static/game.js
+node --check static/vim-viewer.js
+node --check static/maze.js
+node --check static/maze-view.js
+node --test tests/maze.test.cjs
 ```
 
-GitHub Actions runs these checks. Node is only needed for JavaScript syntax
-checks, not to run or deploy the website. Browser verification covers entry,
-htmx navigation, completion, hidden discovery, canvas rendering/scoring, and
-desktop/mobile layouts.
+GitHub Actions runs these checks. Node is used for JavaScript checks and game
+tests only; the website itself runs on Rust.
 
-## Deploy
+## Deployment
 
 ```sh
 cargo build --release --locked
 PORTFOLIO_BIND=0.0.0.0:3000 ./target/release/hugo-portfolio
 ```
 
-Run from a directory containing `static/` and `content/`. Deploy those directories
-alongside the release binary; templates are already embedded. Use a process
-manager/container host and a reverse proxy providing HTTPS. Set
-`PORTFOLIO_CONTENT` to override the content file path and `PORTFOLIO_BIND` to
-change the address/port. Secrets and personal account credentials are not needed.
+The release binary needs the `static/` and `content/` directories alongside it;
+templates are compiled in. In production, it sits behind a reverse proxy with
+HTTPS. `PORTFOLIO_BIND` sets the listening address, and `PORTFOLIO_CONTENT`
+can override the content file path.
 
-## Dependencies
+## Credits
 
-Cargo locks Rust dependencies in `Cargo.lock`. Browser assets and fonts are
-vendored in `static/vendor/`, so runtime CDN availability is not required.
-
-- htmx 2.0.8: <https://htmx.org/> (BSD-2-Clause)
-- Lucide 0.468.0: <https://lucide.dev/> (ISC/MIT portions)
-- IBM Plex Mono and Space Grotesk: <https://fonts.google.com/> (SIL OFL)
-
-Their licenses live next to the assets. To upgrade a vendored library, replace
-its asset with an explicit release version, retain its license, and rerun the
-checks and browser flows above. Do not edit vendored source by hand.
+Built with [htmx](https://htmx.org/), [Lucide](https://lucide.dev/),
+[Phaser](https://phaser.io/), and [CodeMirror](https://codemirror.net/5/).
+The fonts are IBM Plex Mono and Space Grotesk. These assets are hosted locally;
+their licenses are included in `static/vendor/`.

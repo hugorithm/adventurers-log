@@ -5,6 +5,7 @@ use crate::{
 
 pub enum Output {
     Text(String),
+    FileView { path: String, text: String },
     Listing(Vec<Node>),
     Profile,
     Projects,
@@ -81,11 +82,14 @@ pub fn execute(content: &Portfolio, cwd: &str, command: &str, entered: bool) -> 
                 None => return fail(response, "No such directory."),
             }
         }
-        "cat" => {
-            if arguments.len() != 1 { return fail(response, "Usage: cat <file>"); }
+        "cat" | "vim" | "vi" => {
+            if arguments.len() != 1 { return fail(response, &format!("Usage: {} <file>", words[0])); }
             let path = filesystem::resolve(&response.cwd, &arguments[0]);
             response.output = match nodes.iter().find(|node| node.path == path) {
-                Some(node) if node.kind == Kind::File => Output::Text(node.text.clone()),
+                Some(node) if node.kind == Kind::File => {
+                    if words[0] == "cat" { Output::Text(node.text.clone()) }
+                    else { Output::FileView { path, text: node.text.clone() } }
+                }
                 Some(_) => return fail(response, "Not a readable file."),
                 None => return fail(response, "No such file."),
             };
@@ -95,7 +99,7 @@ pub fn execute(content: &Portfolio, cwd: &str, command: &str, entered: bool) -> 
         "whoami" | "about" => response.output = Output::Profile,
         "projects" => response.output = Output::Projects,
         "contact" => response.output = Output::Text(format!("Find me on GitHub:\n{}", content.github)),
-        "help" => response.output = Output::Text("ls [path]       list a directory\nla / ls -a      include hidden entries\ncd [path]       change directory (cd returns home)\ncat <file>      read a file\npwd             show current directory\nwhoami / about  meet Hugo\nprojects        browse selected work\ncontact         find me online\nclear           clear the terminal\nhelp            this command reference".into()),
+        "help" => response.output = Output::Text("ls [path]       list a directory\nla / ls -a      include hidden entries\ncd [path]       change directory (cd returns home)\ncat <file>      read a file\nvim <file>      open a read-only Vim viewer\npwd             show current directory\nwhoami / about  meet Hugo\nprojects        browse selected work\ncontact         find me online\nclear           clear the terminal\nexit            close the connection\nhelp            this command reference".into()),
         "clear" => response.output = Output::Clear,
         "exit" => { response.cwd = "/".into(); response.output = Output::Exit; }
         executable if executable.starts_with("./") => {
@@ -132,8 +136,8 @@ pub fn complete(content: &Portfolio, cwd: &str, command: &str, entered: bool) ->
     let executable = words.len() == 1 && prefix.starts_with("./");
     if words.len() == 1 && !executable {
         return [
-            "ls", "la", "cd", "cat", "pwd", "whoami", "about", "projects", "contact", "help",
-            "clear", "exit",
+            "ls", "la", "cd", "cat", "vim", "vi", "pwd", "whoami", "about", "projects", "contact",
+            "help", "clear", "exit",
         ]
         .into_iter()
         .filter(|verb| verb.starts_with(&prefix.to_ascii_lowercase()))
@@ -141,7 +145,7 @@ pub fn complete(content: &Portfolio, cwd: &str, command: &str, entered: bool) ->
         .collect();
     }
     let verb = words[0].as_str();
-    if !executable && !["ls", "la", "cd", "cat"].contains(&verb) {
+    if !executable && !["ls", "la", "cd", "cat", "vim", "vi"].contains(&verb) {
         return vec![];
     }
     let preceding = if executable {
@@ -235,6 +239,25 @@ mod tests {
 
     fn content() -> Portfolio {
         toml::from_str(include_str!("../content/portfolio.toml")).unwrap()
+    }
+
+    #[test]
+    fn vim_opens_only_virtual_readable_files() {
+        for command in ["vim bio.txt", "vi bio.txt"] {
+            let response = execute(&content(), "/about", command, true);
+            assert_eq!(response.cwd, "/about");
+            assert!(
+                matches!(response.output, Output::FileView { path, text } if path == "/about/bio.txt" && text.contains("piano"))
+            );
+        }
+        for command in ["vim", "vim about", "vim /etc/passwd", "vim hiddenbin"] {
+            assert!(execute(&content(), "/", command, true).error, "{command}");
+        }
+        assert!(execute(&content(), "/about", "vim bio.txt", false).error);
+        assert_eq!(
+            complete(&content(), "/about", "vim BI", true),
+            ["vim bio.txt"]
+        );
     }
 
     #[test]
