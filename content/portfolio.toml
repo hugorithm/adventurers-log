@@ -1,0 +1,24 @@
+name = "Hugo Silva"
+role = "Software Engineer"
+company = "SWISS International Air Lines Ltd."
+github = "https://github.com/hugorithm"
+bio = "I build software, play piano, and take the scenic route whenever possible. Outside of work, you'll find me chasing a melody or a mountain trail. My debugging strategy and hiking strategy are surprisingly similar: take a breath, retrace my steps, and pretend I meant to end up here."
+location = "Somewhere between a keyboard and a mountain."
+skills = ["Software engineering", "Curiosity", "Problem solving", "Piano", "Finding the scenic route"]
+experience = "Software Engineer @ SWISS International Air Lines Ltd.\n\nThis is where my day-to-day engineering story lives.\nAdd dates, responsibilities, technologies, and highlights in content/portfolio.toml."
+
+[[projects]]
+slug = "terminal-portfolio"
+name = "Terminal portfolio"
+description = "The site you're exploring. A small Rust server, htmx, and a filesystem that tells a story."
+stack = "Rust / Axum / htmx"
+status = "This project"
+url = ""
+
+[[projects]]
+slug = "next-adventure"
+name = "Next adventure"
+description = "A placeholder for a real project. Replace this entry with something you've built, what it does, and what you learned."
+stack = "Your technologies here"
+status = "Sample content"
+url = ""

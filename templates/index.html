@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#121616">
+    <meta name="description" content="Hugo Silva. Software Engineer at SWISS International Air Lines Ltd. A personal portfolio, one command at a time.">
+    <title>{{ portfolio.name }} | Software Engineer</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/vendor/htmx.min.js" defer></script>
+    <script src="/static/vendor/lucide.min.js" defer></script>
+    <script src="/static/game.js" defer></script>
+    <script src="/static/terminal.js" defer></script>
+</head>
+<body>
+<div class="terminal-app">
+    <header class="topbar">
+        <a class="wordmark" href="/" aria-label="Hugo Silva home"><span class="monogram">hs<span>_</span></span><span class="site-address">hugo.silva<span> / personal terminal</span></span></a>
+        <div class="topbar-right"><span class="connection-state"><span class="status-dot"></span><span id="connection-label">awaiting connection</span></span><button id="crt-toggle" class="icon-button" type="button" title="Toggle CRT effect" aria-label="Toggle CRT effect" aria-pressed="true"><i data-lucide="monitor" aria-hidden="true"></i></button><a class="icon-button" href="{{ portfolio.github }}" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="Hugo on GitHub"><i data-lucide="github" aria-hidden="true"></i></a></div>
+    </header>
+    <main id="terminal-scroll" tabindex="-1">
+        <div class="terminal-content">
+            <div class="session-heading"><span><span class="tiny-square"></span> PORTFOLIO / SESSION 001</span><span class="session-time">{{ portfolio.role }}</span></div>
+            <section id="welcome" class="welcome" aria-label="Welcome">
+                <div class="boot-lines"><p><span class="ok">[ok]</span> establishing a little corner of the internet</p><p><span class="ok">[ok]</span> loading code, keys &amp; a pair of hiking boots</p></div>
+                <div class="identity"><div class="identity-eyebrow">HELLO, WORLD. I'M</div><h1>{{ portfolio.name }}<span class="name-cursor">_</span></h1><p class="role">{{ portfolio.role }} <span>@</span> <span class="company">{{ portfolio.company }}</span></p></div>
+                <p class="intro">A software engineer with a soft spot for piano keys,<br class="desktop-break"> mountain trails, and things that quietly work.</p>
+                <div class="welcome-signature"><span class="signature-line"></span><span>sometimes the best way forward is a command line.</span></div>
+                <div id="entry-instruction" class="entry-instruction"><span class="entry-arrow" aria-hidden="true">&gt;</span><p>Make yourself at home.<br><span>Type <button type="button" data-command="ssh hugo" class="inline-command">ssh hugo</button> and press Enter to connect.</span></p></div>
+            </section>
+            <div id="history" role="log" aria-live="polite" aria-relevant="additions"></div>
+            <div class="terminal-prompt">
+            <div id="request-error" class="request-error" role="alert" hidden>Connection interrupted. Your command is still here; try again.</div>
+            <form id="command-form" hx-post="/command" hx-target="#history" hx-swap="beforeend" hx-disabled-elt="#command-input, #submit-command" autocomplete="off">
+                <input id="cwd" name="cwd" type="hidden" value="/">
+                <input id="entered" name="entered" type="hidden" value="false">
+                <label for="command-input" class="prompt"><span class="prompt-user">visitor</span><span class="prompt-at">@</span><span>hugo</span><span class="prompt-colon">:</span><span id="prompt-path">~</span><span class="prompt-symbol">$</span></label>
+                <input id="command-input" name="command" type="text" aria-label="Terminal command" placeholder="ssh hugo" maxlength="512" spellcheck="false" autocapitalize="off" autocorrect="off" autofocus>
+                <span id="loading" class="htmx-indicator" aria-hidden="true">...</span>
+                <button id="submit-command" class="icon-button" type="submit" title="Run command" aria-label="Run command"><i data-lucide="corner-down-left" aria-hidden="true"></i></button>
+            </form>
+            <div id="completions" class="completions" role="group" aria-label="Completion matches" hidden></div>
+            <div class="dock-meta"><nav id="quick-commands" aria-label="Quick commands" hidden><button type="button" data-command="ls">ls</button><button type="button" data-command="about">about</button><button type="button" data-command="projects">projects</button><button type="button" data-command="contact">contact</button><button type="button" data-command="help">help</button></nav><span id="connection-hint">a new connection awaits<span class="blinking-dot">.</span></span><span class="dock-note">built with Rust <span>/</span> explored by you</span></div>
+            </div>
+        </div>
+    </main>
+    <footer class="bottom-bar"><span>&copy; <span id="year">2026</span> {{ portfolio.name }}</span><span class="footer-note">code. compose. wander. repeat.</span><span class="footer-version">v1.0.0 <span class="status-dot"></span></span></footer>
+</div>
+<noscript><div class="noscript-message">This terminal needs JavaScript for htmx. You can still find Hugo at <a href="{{ portfolio.github }}">{{ portfolio.github }}</a>.</div></noscript>
+</body>
+</html>

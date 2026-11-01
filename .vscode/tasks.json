@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run portfolio",
+			"type": "shell",
+			"command": "cargo run",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
