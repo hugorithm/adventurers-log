@@ -1,4 +1,4 @@
-# Hugo Silva's Portfolio
+# Adventurers Log
 
 My personal corner of the internet, built as a terminal.
 
