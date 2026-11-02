@@ -256,6 +256,44 @@ mod tests {
     }
 
     #[test]
+    fn published_portfolio_content_is_readable() {
+        let portfolio = Portfolio::load("content/portfolio.toml").unwrap();
+        for (path, expected) in [
+            ("/about/bio.txt", "Switzerland"),
+            ("/about/education.txt", "19/20"),
+            ("/about/education.txt", "Master_Thesis.pdf"),
+            ("/experience/current.txt", "Idryl Technologies"),
+            ("/experience/current.txt", "RetentionAI"),
+            ("/contact/email.txt", "hugofsilv@gmail.com"),
+            (
+                "/contact/linkedin.txt",
+                "https://www.linkedin.com/in/hugoandrefsilva",
+            ),
+            ("/projects/hopfencraft/README.txt", "hugorithm/HopfenCraft"),
+            ("/projects/droobee/README.txt", "hugorithm/Droobee"),
+            (
+                "/projects/healthcare-tracking-blockchain/README.txt",
+                "hugorithm/Healthcare-tracking-blockchain",
+            ),
+        ] {
+            let response = execute(&portfolio, "/", &format!("cat {path}"), true);
+            assert!(!response.error, "{path}");
+            assert!(
+                matches!(response.output, Output::Text(text) if text.contains(expected)),
+                "{path} should contain {expected}"
+            );
+        }
+        assert_eq!(
+            complete(&portfolio, "/contact", "cat em", true),
+            ["cat email.txt"]
+        );
+        assert_eq!(
+            complete(&portfolio, "/about", "cat ed", true),
+            ["cat education.txt"]
+        );
+    }
+
+    #[test]
     fn vim_opens_only_virtual_readable_files() {
         for command in ["vim bio.txt", "vi bio.txt"] {
             let response = execute(&content(), "/about", command, true);

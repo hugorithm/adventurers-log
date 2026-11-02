@@ -45,9 +45,10 @@ portfolio doesn't mean rewriting the site.
 ## Maintaining the Site
 
 [content/portfolio.toml](content/portfolio.toml) holds my profile, skills,
-experience, links, and projects. It's read on each request, so content changes
-don't need a restart. Some project and experience entries are still placeholders
-while I finish writing them.
+experience, education, links, and projects. It's read on each request, so content
+changes don't need a restart. Education and research are in `/about/education.txt`;
+GitHub, email, and LinkedIn are under `/contact`. The content reflects my published
+portfolio at <https://hsilva.vercel.app/> alongside this terminal portfolio project.
 
 Virtual folders and files are defined in [src/filesystem.rs](src/filesystem.rs).
 Command behavior lives in [src/shell.rs](src/shell.rs).

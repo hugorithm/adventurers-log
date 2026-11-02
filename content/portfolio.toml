@@ -2,10 +2,41 @@ name = "Hugo Silva"
 role = "Software Engineer"
 company = "SWISS International Air Lines Ltd."
 github = "https://github.com/hugorithm"
-bio = "I build software, play piano, and take the scenic route whenever possible. Outside of work, you'll find me chasing a melody or a mountain trail. My debugging strategy and hiking strategy are surprisingly similar: take a breath, retrace my steps, and pretend I meant to end up here."
-location = "Somewhere between a keyboard and a mountain."
-skills = ["Software engineering", "Curiosity", "Problem solving", "Piano", "Finding the scenic route"]
-experience = "Software Engineer @ SWISS International Air Lines Ltd.\n\nThis is where my day-to-day engineering story lives.\nAdd dates, responsibilities, technologies, and highlights in content/portfolio.toml."
+email = "hugofsilv@gmail.com"
+linkedin = "https://www.linkedin.com/in/hugoandrefsilva"
+bio = "I'm Hugo, a Software Engineer based in Switzerland with a passion for technology. I love learning new things, growing with the projects I contribute to, and keeping up with new technologies. Outside of work, I play piano, hike, and enjoy sports."
+location = "Switzerland"
+skills = ["Software engineering", "C# / .NET microservices", "Docker / Kubernetes / Elastic", "Azure / Terraform / Azure DevOps", "LLM services / Retrieval-Augmented Generation (RAG) / Azure AI Search", "CheckmarxOne / SonarQube / Secure development", "Architecture Decision Records (ADRs)", "Java / Spring Boot / PostgreSQL", "React / Redux / TypeScript / Material UI", "Node.js / TypeScript / Discord.js", "Go / Python / Hyperledger Fabric / CouchDB", "Prometheus / Grafana"]
+experience = """
+May 2024 - Present
+Software Engineer @ SWISS International Air Lines Ltd.
+
+- Built and maintained scalable .NET microservices using C#, Docker, Kubernetes, and Elastic, improving reliability and maintainability across internal platforms.
+- Developed Terraform release pipelines in Azure DevOps, with secure service principals, federated credentials, and service connections for infrastructure deployments.
+- Implemented private endpoints across key Azure resources to ensure internal-only access and reduce public exposure.
+- Designed and developed a scalable LLM service for RAG use cases across multiple projects and models, including GPT-4o and text-embedding-3-large. Integrated Azure AI Search for vector, hybrid, and semantic hybrid search.
+- Served as Security Champion and integrated CheckmarxOne and SonarQube into pipelines. Eliminated 100+ critical vulnerabilities in under a month, setting a company-wide benchmark for security adoption.
+- Designed and contributed to Architecture Decision Records, aligning system design with technical and business goals.
+- Delivered townhall presentations to 300+ employees, showcasing the team's achievements and platform capabilities.
+- Won 1st place at the Lufthansa Group Agentic AI Hackathon with RetentionAI.
+	https://www.linkedin.com/posts/hug0silva_im-truly-honored-to-have-been-part-of-the-activity-7326608709718040578-TmAZ
+
+2019 - May 2024
+Software Engineer @ Idryl Technologies
+"""
+
+education = """
+2021 - Master's in Engineering and Management of Information Systems, University of Minho. Grade: 19/20.
+Thesis: Management and Analysis Platform for Data Based in Blockchain Technology
+From system design to implementation of a blockchain network.
+https://hsilva.vercel.app/masters
+Thesis PDF: https://hsilva.vercel.app/documents/Master_Thesis.pdf
+
+Publication: Modular Blockchain Implementation in Intensive Medicine
+https://doi.org/10.1016/j.procs.2020.03.073
+
+2014 - English C1 certification
+"""
 
 [[projects]]
 slug = "terminal-portfolio"
@@ -16,9 +47,25 @@ status = "This project"
 url = ""
 
 [[projects]]
-slug = "next-adventure"
-name = "Next adventure"
-description = "A placeholder for a real project. Replace this entry with something you've built, what it does, and what you learned."
-stack = "Your technologies here"
-status = "Sample content"
-url = ""
+slug = "hopfencraft"
+name = "HopfenCraft"
+description = "A beer e-commerce shop built to learn and showcase Java, Spring Boot, and React. Includes PayPal API v2, OAuth2, Google reCAPTCHA, and monitoring with Prometheus and Grafana."
+stack = "Java / Spring Boot / PostgreSQL / React / Redux / TypeScript / Material UI / Docker / PayPal API v2 / OAuth2 / Google reCAPTCHA / Prometheus / Grafana"
+status = "2023"
+url = "https://github.com/hugorithm/HopfenCraft"
+
+[[projects]]
+slug = "droobee"
+name = "Droobee"
+description = "A Discord music bot supporting queues, playlists, and multiple guilds. Built to provide the speed and functionality I wanted from a dedicated music bot."
+stack = "Node.js / TypeScript / Discord API / Discord.js"
+status = "2022"
+url = "https://github.com/hugorithm/Droobee"
+
+[[projects]]
+slug = "healthcare-tracking-blockchain"
+name = "Blockchain Solution for Healthcare Data Tracking"
+description = "My master's dissertation project: a Hyperledger Fabric blockchain network tracking healthcare patient data through beacons. Started at Hospital of S. Joao in Porto to address data immutability and veracity, with tamper-proof, controlled storage for privacy and reliability. Includes a Node.js API for asset creation, modification, and queries, plus Blockchain Explorer, Hyperledger Caliper, Prometheus, and Grafana for monitoring. Platform: Linux.\n\nThesis: https://hsilva.vercel.app/documents/Master_Thesis.pdf"
+stack = "Go / Node.js / Docker / Hyperledger Fabric / Python / CouchDB"
+status = "2020 - Master's dissertation project"
+url = "https://github.com/hugorithm/Healthcare-tracking-blockchain"

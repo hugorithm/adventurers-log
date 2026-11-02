@@ -6,10 +6,13 @@ pub struct Portfolio {
     pub role: String,
     pub company: String,
     pub github: String,
+    pub email: String,
+    pub linkedin: String,
     pub bio: String,
     pub location: String,
     pub skills: Vec<String>,
     pub experience: String,
+    pub education: String,
     pub projects: Vec<Project>,
 }
 
@@ -46,6 +49,9 @@ impl Portfolio {
         }
         if !content.github.starts_with("https://") {
             return Err("GitHub URL must use https://".into());
+        }
+        if !content.linkedin.starts_with("https://") {
+            return Err("LinkedIn URL must use https://".into());
         }
         Ok(content)
     }

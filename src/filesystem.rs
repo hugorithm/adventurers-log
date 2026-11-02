@@ -60,6 +60,13 @@ pub fn nodes(content: &Portfolio) -> Vec<Node> {
             "tools & tendencies",
         ),
         node(
+            "/about/education.txt",
+            Kind::File,
+            false,
+            &content.education,
+            "education & research",
+        ),
+        node(
             "/experience/current.txt",
             Kind::File,
             false,
@@ -72,6 +79,20 @@ pub fn nodes(content: &Portfolio) -> Vec<Node> {
             false,
             &content.github,
             "code & conversations",
+        ),
+        node(
+            "/contact/email.txt",
+            Kind::File,
+            false,
+            &content.email,
+            "send me a message",
+        ),
+        node(
+            "/contact/linkedin.txt",
+            Kind::File,
+            false,
+            &content.linkedin,
+            "professional connections",
         ),
         node(
             "/hiddenbin",
