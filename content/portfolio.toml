@@ -15,7 +15,7 @@ Building secure cloud platforms, self-service infrastructure, and AI services th
 
 - Developed a custom Terraform provider for a SaaS platform, bringing its resources into infrastructure-as-code workflows.
 - Built extensive self-service provisioning automation, enabling product teams to independently provision and manage their SaaS projects and deploy LLMs for chatbot use cases.
-- Designed and built a scalable LLM service supporting RAG across multiple projects and models, including GPT-4o and text-embedding-3-large. Integrated Azure AI Search for vector, hybrid, and semantic hybrid retrieval.
+- Designed and built a scalable LLM service supporting RAG across multiple projects and models. Integrated Azure AI Search for vector, hybrid, and semantic hybrid retrieval.
 - Strengthened platform reliability and maintainability by building and maintaining scalable .NET microservices with C#, Docker, Kubernetes, and Elastic.
 - Automated infrastructure delivery through Terraform release pipelines in Azure DevOps, using federated credentials and secure service connections.
 - Reduced cloud attack surface by implementing private endpoints across key Azure resources, restricting access to internal networks.
