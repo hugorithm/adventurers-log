@@ -32,6 +32,12 @@ Tab completion, command history, Ctrl+C, and Ctrl+D keep the experience close
 to a terminal. The shell is simulated: nothing a visitor types executes on
 the server. There's a hidden arcade game, too. I'll leave finding it to you.
 
+An original, quiet retro-computer soundtrack starts after your first click or
+keypress, with filtered chip tones, a soft bass, and a sparse melody with echo.
+The speaker button in the top bar mutes the entire site, including game sounds,
+and remembers your choice. Audio pauses while the tab is hidden. The music is
+synthesized locally with Web Audio, with no external audio downloads.
+
 ## Under the Hood
 
 The backend is Rust with Axum and Askama. htmx handles command responses,
@@ -66,10 +72,12 @@ node --check static/terminal.js
 node --check static/vim-viewer.js
 node --check static/maze.js
 node --check static/maze-view.js
+node --check static/audio.js
 node --test tests/maze.test.cjs
+node --test tests/audio.test.cjs
 ```
 
-GitHub Actions runs these checks. Node is used for JavaScript checks and game
+GitHub Actions runs these checks. Node is used for JavaScript, audio, and game
 tests only; the website itself runs on Rust.
 
 ## Deployment

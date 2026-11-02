@@ -11,14 +11,18 @@ experience = """
 May 2024 - Present
 Software Engineer @ SWISS International Air Lines Ltd.
 
-- Built and maintained scalable .NET microservices using C#, Docker, Kubernetes, and Elastic, improving reliability and maintainability across internal platforms.
-- Developed Terraform release pipelines in Azure DevOps, with secure service principals, federated credentials, and service connections for infrastructure deployments.
-- Implemented private endpoints across key Azure resources to ensure internal-only access and reduce public exposure.
-- Designed and developed a scalable LLM service for RAG use cases across multiple projects and models, including GPT-4o and text-embedding-3-large. Integrated Azure AI Search for vector, hybrid, and semantic hybrid search.
-- Served as Security Champion and integrated CheckmarxOne and SonarQube into pipelines. Eliminated 100+ critical vulnerabilities in under a month, setting a company-wide benchmark for security adoption.
-- Designed and contributed to Architecture Decision Records, aligning system design with technical and business goals.
-- Delivered townhall presentations to 300+ employees, showcasing the team's achievements and platform capabilities.
-- Won 1st place at the Lufthansa Group Agentic AI Hackathon with RetentionAI.
+Building secure cloud platforms, self-service infrastructure, and AI services that enable product teams to deliver independently.
+
+- Developed a custom Terraform provider for a SaaS platform, bringing its resources into infrastructure-as-code workflows.
+- Built extensive self-service provisioning automation, enabling product teams to independently provision and manage their SaaS projects and deploy LLMs for chatbot use cases.
+- Designed and built a scalable LLM service supporting RAG across multiple projects and models, including GPT-4o and text-embedding-3-large. Integrated Azure AI Search for vector, hybrid, and semantic hybrid retrieval.
+- Strengthened platform reliability and maintainability by building and maintaining scalable .NET microservices with C#, Docker, Kubernetes, and Elastic.
+- Automated infrastructure delivery through Terraform release pipelines in Azure DevOps, using federated credentials and secure service connections.
+- Reduced cloud attack surface by implementing private endpoints across key Azure resources, restricting access to internal networks.
+- Drove secure-development adoption as Security Champion, integrating CheckmarxOne and SonarQube into delivery pipelines. Eliminated 100+ critical vulnerabilities in under a month and set a company-wide benchmark for security adoption.
+- Shaped system design through Architecture Decision Records, translating technical and business requirements into documented architectural decisions.
+- Presented platform capabilities and engineering outcomes to 300+ employees at company townhalls, communicating technical work to a broad audience.
+- Won 1st place at the Lufthansa Group Agentic AI Hackathon as part of the team behind RetentionAI.
 	https://www.linkedin.com/posts/hug0silva_im-truly-honored-to-have-been-part-of-the-activity-7326608709718040578-TmAZ
 
 2019 - May 2024

@@ -88,7 +88,7 @@
         }
 
         function tone(event) {
-            if (!sound || !audio) return;
+            if (!sound || !audio || window.SiteAudio.muted || document.hidden) return;
             const oscillator = audio.createOscillator();
             const gain = audio.createGain();
             oscillator.type = 'square';
@@ -108,7 +108,7 @@
                 audio.currentTime + 0.09,
             );
             oscillator.connect(gain);
-            gain.connect(audio.destination);
+            gain.connect(window.SiteAudio.output);
             oscillator.start();
             oscillator.stop(audio.currentTime + 0.1);
             oscillator.onended = () => {
@@ -120,7 +120,6 @@
         function destroy() {
             controller.abort();
             engine?.destroy(true);
-            audio?.close();
         }
         function close() {
             destroy();
@@ -362,7 +361,7 @@
 
         function start() {
             model.start();
-            audio?.resume();
+            if (audio) window.SiteAudio.resume().catch(() => {});
             updateLabels();
             document.activeElement?.blur();
         }
@@ -439,10 +438,7 @@
             'click',
             async () => {
                 try {
-                    if (!audio)
-                        audio = new (window.AudioContext ||
-                            window.webkitAudioContext)();
-                    await audio.resume();
+                    audio = await window.SiteAudio.resume();
                     sound = !sound;
                     soundButton.setAttribute('aria-pressed', String(sound));
                     soundButton.setAttribute(

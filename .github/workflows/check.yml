@@ -22,4 +22,6 @@ jobs:
       - run: node --check static/vim-viewer.js
       - run: node --check static/maze.js
       - run: node --check static/maze-view.js
+      - run: node --check static/audio.js
       - run: node --test tests/maze.test.cjs
+      - run: node --test tests/audio.test.cjs

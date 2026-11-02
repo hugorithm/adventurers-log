@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <script src="/static/vendor/htmx.min.js" defer></script>
     <script src="/static/vendor/lucide.min.js" defer></script>
+    <script src="/static/audio.js" defer></script>
     <script src="/static/maze.js" defer></script>
     <script src="/static/maze-view.js" defer></script>
     <script src="/static/vim-viewer.js" defer></script>
@@ -19,7 +20,7 @@
 <div class="terminal-app">
     <header class="topbar">
         <a class="wordmark" href="/" aria-label="Hugo Silva home"><span class="monogram">hs<span>_</span></span><span class="site-address">{{ hostname }}<span> / personal terminal</span></span></a>
-        <div class="topbar-right"><span class="connection-state"><span class="status-dot"></span><span id="connection-label">awaiting connection</span></span><button id="crt-toggle" class="icon-button" type="button" title="Toggle CRT effect" aria-label="Toggle CRT effect" aria-pressed="true"><i data-lucide="monitor" aria-hidden="true"></i></button><a class="icon-button" href="{{ portfolio.github }}" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="Hugo on GitHub"><i data-lucide="github" aria-hidden="true"></i></a></div>
+        <div class="topbar-right"><span class="connection-state"><span class="status-dot"></span><span id="connection-label">awaiting connection</span></span><button id="audio-toggle" class="icon-button" type="button" title="Mute website" aria-label="Mute website" aria-pressed="false"><i data-lucide="volume-2" aria-hidden="true"></i></button><button id="crt-toggle" class="icon-button" type="button" title="Toggle CRT effect" aria-label="Toggle CRT effect" aria-pressed="true"><i data-lucide="monitor" aria-hidden="true"></i></button><a class="icon-button" href="{{ portfolio.github }}" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="Hugo on GitHub"><i data-lucide="github" aria-hidden="true"></i></a></div>
     </header>
     <main id="terminal-scroll" tabindex="-1">
         <div class="terminal-content">
