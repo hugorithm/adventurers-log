@@ -33,6 +33,7 @@ education = """
 2021 - Master's in Engineering and Management of Information Systems, University of Minho. Grade: 19/20.
 Thesis: Management and Analysis Platform for Data Based in Blockchain Technology
 From system design to implementation of a blockchain network.
+Thesis URL: https://hdl.handle.net/1822/104349
 https://hsilva.vercel.app/masters
 Thesis PDF: https://hsilva.vercel.app/documents/Master_Thesis.pdf
 
@@ -69,7 +70,7 @@ url = "https://github.com/hugorithm/Droobee"
 [[projects]]
 slug = "healthcare-tracking-blockchain"
 name = "Blockchain Solution for Healthcare Data Tracking"
-description = "My master's dissertation project: a Hyperledger Fabric blockchain network tracking healthcare patient data through beacons. Started at Hospital of S. Joao in Porto to address data immutability and veracity, with tamper-proof, controlled storage for privacy and reliability. Includes a Node.js API for asset creation, modification, and queries, plus Blockchain Explorer, Hyperledger Caliper, Prometheus, and Grafana for monitoring. Platform: Linux.\n\nThesis: https://hsilva.vercel.app/documents/Master_Thesis.pdf"
+description = "My master's dissertation project: a Hyperledger Fabric blockchain network tracking healthcare patient data through beacons. Started at Hospital of S. Joao in Porto to address data immutability and veracity, with tamper-proof, controlled storage for privacy and reliability. Includes a Node.js API for asset creation, modification, and queries, plus Blockchain Explorer, Hyperledger Caliper, Prometheus, and Grafana for monitoring. Platform: Linux.\n\nThesis: https://hdl.handle.net/1822/104349"
 stack = "Go / Node.js / Docker / Hyperledger Fabric / Python / CouchDB"
 status = "2020 - Master's dissertation project"
 url = "https://github.com/hugorithm/Healthcare-tracking-blockchain"
